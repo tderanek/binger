@@ -1,7 +1,7 @@
 module Binger
   class BingBrowser    
-    def initialize(device_type)
-      raise 'BingBrowser is to be used as an abstract class!' if class == BingBrowser
+    def initialize
+      raise 'BingBrowser is to be used as an abstract class!' if self.class == BingBrowser
 
       @browser = nil
     end
