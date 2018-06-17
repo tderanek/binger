@@ -15,15 +15,6 @@ module Binger
       sleep(options[:pause_after]) if options[:pause_after]
     end
 
-    def submit_credentials(username, password)
-      # Enter and confirm email address
-      browser.find_displayed_element(name: 'loginfmt').send_keys(username)
-      browser.find_displayed_element(id: 'idSIButton9').click
-      # Enter and confirm password
-      browser.find_displayed_element(name: 'passwd').send_keys(password)
-      browser.find_displayed_element(id: 'idSIButton9').click
-    end
-
     def to_main_page
       browser.get('https://www.bing.com')
     end
