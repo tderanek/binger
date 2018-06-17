@@ -27,7 +27,7 @@ module Binger
       type: :numeric,
       aliases: :a,
       desc: 'Seconds to pause for immediately before confirming a search',
-      default: 0
+      default: 0.5
     class_option :custom_search,
       type: :string,
       aliases: :c,
