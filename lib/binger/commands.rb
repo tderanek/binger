@@ -39,13 +39,13 @@ module Binger
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
 
-      bing_browser = BingBrowser.new
+      bing_browser = BingBrowser.new(:desktop)
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
           pause_before: options[:pause_before],
           pause_after: options[:pause_after],
-          custom_search: options[:custom_search] || randomized_query
+          custom_search: options[:custom_search] || Helper.randomized_query
         )
       end
 
@@ -54,20 +54,20 @@ module Binger
 
     desc 'mobile', 'BROKEN! DO NOT USE'
     def mobile
-      # username = options[:email] || Helper.prompt_for_username
-      # password = options[:password] || Helper.prompt_for_password
+      username = options[:email] || Helper.prompt_for_username
+      password = options[:password] || Helper.prompt_for_password
 
-      # bing_browser = MobileBingBrowser.new
-      # bing_browser.login(username, password)
-      # options[:num_searches].times do
-      #   bing_browser.send_search(
-      #     pause_before: options[:pause_before],
-      #     pause_after: options[:pause_after],
-      #     custom_search: options[:custom_search]
-      #   )
-      # end
+      bing_browser = BingBrowser.new(:mobile)
+      bing_browser.login(username, password)
+      options[:num_searches].times do
+        bing_browser.send_search(
+          pause_before: options[:pause_before],
+          pause_after: options[:pause_after],
+          custom_search: options[:custom_search] || Helper.randomized_query
+        )
+      end
 
-      # bing_browser.close
+      bing_browser.close
     end
   end
 end
