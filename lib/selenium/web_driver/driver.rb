@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Selenium::WebDriver
   class Driver
     # Finds element and returns it after it is displayed

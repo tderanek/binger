@@ -1,8 +1,9 @@
-module Binger
-  class BingBrowser    
-    def initialize
-      raise 'BingBrowser is to be used as an abstract class!' if self.class == BingBrowser
+# frozen_string_literal: true
 
+module Binger
+  class BingBrowser
+    def initialize(type)
+      @type = validated_type(type)
       @browser = nil
     end
 
@@ -10,12 +11,12 @@ module Binger
       @browser ||= new_browser
     end
 
-    def close
-      browser.quit
+    def new_browser
+      Watir::Browser.new(:chrome)
     end
 
-    def find_displayed_element(search, timeout = 5)
-      browser.find_displayed_element(search, timeout)
+    def close
+      browser.close
     end
 
     def login(username, password)
@@ -24,23 +25,45 @@ module Binger
       submit_credentials(username, password)
     end
 
-    def randomized_query(size = 50)
-      number_generator = Random.new(Time.now.to_i)
-      charset = [('a'..'z'), ('A'..'Z'), (0..9)].map(&:to_a).flatten
-      (0...size).map { charset[number_generator.rand(charset.length)] }.join
-    end
-
     def submit_credentials(username, password)
       # Enter and confirm email address
-      browser.find_displayed_element(name: 'loginfmt').send_keys(username)
-      browser.find_displayed_element(id: 'idSIButton9').click
+      browser.element(name: 'loginfmt').set(username)
+      browser.element(id: 'idSIButton9').click
       # Enter and confirm password
-      browser.find_displayed_element(name: 'passwd').send_keys(password)
-      browser.find_displayed_element(id: 'idSIButton9').click
+      browser.element(name: 'passwd').set(password)
+      browser.element(id: 'idSIButton9').click
     end
 
     def to_main_page
-      browser.get('https://www.bing.com')
+      browser.goto('https://www.bing.com')
+    end
+
+    def send_search(options = {})
+      browser.element(name: 'q').yield_self do |search_bar|
+        search_bar.set(options[:custom_search] || randomized_query)
+      end
+
+      sleep(options[:pause_before]) if options[:pause_before]
+      browser.element(name: 'go').click
+      sleep(options[:pause_after]) if options[:pause_after]
+    end
+
+    def to_sign_in
+      # Click sign-in button
+      browser.element(id: 'id_l').click
+    end
+
+    private
+
+    def validated_type(type)
+      case type
+      when :mobile
+        :mobile
+      when :desktop
+        :desktop
+      else
+        raise "Invalid device type '#{type}' used"
+      end
     end
   end
 end

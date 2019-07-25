@@ -20,10 +20,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'selenium-webdriver', '~> 3.12'
   spec.add_dependency 'thor', '~> 0.20'
+  spec.add_dependency 'watir', '~> 6.16'
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.57'
 end
