@@ -39,7 +39,7 @@ module Binger
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
 
-      bing_browser = BingBrowser.new(:desktop)
+      bing_browser = DesktopBingBrowser.new(:desktop)
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
@@ -52,12 +52,12 @@ module Binger
       bing_browser.close
     end
 
-    desc 'mobile', 'BROKEN! DO NOT USE'
+    desc 'mobile', 'Technically working...'
     def mobile
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
 
-      bing_browser = BingBrowser.new(:mobile)
+      bing_browser = MobileBingBrowser.new(:mobile)
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
@@ -68,6 +68,36 @@ module Binger
       end
 
       bing_browser.close
+    end
+
+    desc 'turbo_mode', 'Raw, untapped power... use at your own risk... literally. Have not done any polishing'
+    def turbo_mode
+      username = options[:email] || Helper.prompt_for_username
+      password = options[:password] || Helper.prompt_for_password
+
+      bing_browser = DesktopBingBrowser.new(:desktop)
+      bing_browser.login(username, password)
+      options[:num_searches].times do
+        bing_browser.send_search(
+          pause_before: options[:pause_before],
+          pause_after: options[:pause_after],
+          custom_search: options[:custom_search] || Helper.randomized_query
+        )
+      end
+      bing_browser.close
+
+      bing_browser = MobileBingBrowser.new(:mobile)
+      bing_browser.login(username, password)
+      options[:num_searches].times do
+        bing_browser.send_search(
+          pause_before: options[:pause_before],
+          pause_after: options[:pause_after],
+          custom_search: options[:custom_search] || Helper.randomized_query
+        )
+      end
+      bing_browser.close
+
+      # TODO: Re-organize and get rid of repeated code
     end
   end
 end

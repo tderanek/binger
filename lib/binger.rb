@@ -6,6 +6,8 @@ require 'watir'
 require 'webdriver-user-agent'
 
 require 'binger/bing_browser'
+require 'binger/bing_browser/desktop_bing_browser'
+require 'binger/bing_browser/mobile_bing_browser'
 require 'binger/commands'
 require 'binger/helper'
 require 'binger/version'
