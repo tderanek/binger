@@ -25,7 +25,7 @@ module Binger
     end
 
     def new_browser
-      driver = Webdriver::UserAgent.driver(browser: :chrome, agent: :iphone, orientation: :landscape)
+      driver = Webdriver::UserAgent.driver(browser: :chrome, agent: :iphone, orientation: :portrait)
       Watir::Browser.new(driver)
     end
   end

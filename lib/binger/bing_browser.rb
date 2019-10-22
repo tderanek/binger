@@ -2,7 +2,7 @@
 
 module Binger
   class BingBrowser
-    def initialize(type)
+    def initialize
       raise 'BingBrowser is to be used as an abstract class!' if self.class == BingBrowser
       
       @browser = nil

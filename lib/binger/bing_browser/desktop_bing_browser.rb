@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Binger
-  class DesktopBingBrowser
+  class DesktopBingBrowser < BingBrowser
     def send_search(options = {})
       patiently_select(:text_field, name: 'q').yield_self do |search_bar|
         search_bar.set(options[:custom_search] || randomized_query)

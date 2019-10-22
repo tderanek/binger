@@ -39,7 +39,7 @@ module Binger
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
 
-      bing_browser = DesktopBingBrowser.new(:desktop)
+      bing_browser = DesktopBingBrowser.new
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
@@ -57,7 +57,7 @@ module Binger
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
 
-      bing_browser = MobileBingBrowser.new(:mobile)
+      bing_browser = MobileBingBrowser.new
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
@@ -75,7 +75,7 @@ module Binger
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
 
-      bing_browser = DesktopBingBrowser.new(:desktop)
+      bing_browser = DesktopBingBrowser.new
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
@@ -86,7 +86,7 @@ module Binger
       end
       bing_browser.close
 
-      bing_browser = MobileBingBrowser.new(:mobile)
+      bing_browser = MobileBingBrowser.new
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
