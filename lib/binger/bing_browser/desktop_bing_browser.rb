@@ -8,7 +8,11 @@ module Binger
       end
 
       sleep(options[:pause_before]) if options[:pause_before]
-      patiently_select(:element, name: 'go').click
+      if browser.form(id: 'sb_form').present?
+        patiently_select(:form, id: 'sb_form').submit
+      else
+        patiently_select(:element, id: 'sb_form_go').click
+      end
       sleep(options[:pause_after]) if options[:pause_after]
     end
 
@@ -19,6 +23,7 @@ module Binger
     end
 
     def to_sign_in
+      sleep(2)
       patiently_select(:element, id: 'id_l').click
     end
   end

@@ -3,8 +3,14 @@
 module Binger
   class MobileBingBrowser < BingBrowser
     def send_search(options = {})
-      patiently_select(:text_field, name: 'q').yield_self do |search_bar|
-        search_bar.set(options[:custom_search] || randomized_query)
+      if browser.text_field(id: 'sb_form_q').present?
+        patiently_select(:text_field, id: 'sb_form_q').yield_self do |search_bar|
+          search_bar.set(options[:custom_search] || randomized_query)
+        end
+      else
+        patiently_select(:textarea, id: 'sb_form_q').yield_self do |search_bar|
+          search_bar.set(options[:custom_search] || randomized_query)
+        end
       end
 
       sleep(options[:pause_before]) if options[:pause_before]
