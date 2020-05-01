@@ -2,6 +2,9 @@
 
 module Binger
   class MobileBingBrowser < BingBrowser
+    HOME_PAGE_SUBMIT_CRITERIA = { class: 'search icon tooltip' }
+    RESULTS_PAGE_SUBMIT_CRITERIA = { id: 'sb_form_go' }
+
     def send_search(options = {})
       if browser.text_field(id: 'sb_form_q').present?
         patiently_select(:text_field, id: 'sb_form_q').yield_self do |search_bar|
@@ -14,10 +17,12 @@ module Binger
       end
 
       sleep(options[:pause_before]) if options[:pause_before]
-      if browser.element(id: 'sbBtn').present?
-        patiently_select(:element, id: 'sbBtn').click
+      if browser.element(HOME_PAGE_SUBMIT_CRITERIA).present?
+        patiently_select(:element, HOME_PAGE_SUBMIT_CRITERIA).click
+      elsif browser.element(RESULTS_PAGE_SUBMIT_CRITERIA).present?
+        patiently_select(:element, RESULTS_PAGE_SUBMIT_CRITERIA).click
       else
-        patiently_select(:element, id: 'sb_form_go').click
+        abort 'Submit button not found'
       end
       sleep(options[:pause_after]) if options[:pause_after]
     end
