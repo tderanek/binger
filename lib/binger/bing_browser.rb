@@ -22,8 +22,8 @@ module Binger
       submit_credentials(username, password)
     end
 
-    def patiently_select(element_type, search)
-      browser.send(element_type, search).wait_until(interval: 0.5, &:present?)
+    def patiently_select(element_type, search, seconds = 10)
+      element = browser.send(element_type, search).wait_until(interval: 0.5, &:present?)
     end
 
     def to_main_page

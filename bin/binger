@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'binger'
+require_relative '../lib/binger'
 
 Binger::Commands.start(ARGV)

@@ -2,7 +2,7 @@
 
 module Binger
   class MobileBingBrowser < BingBrowser
-    HOME_PAGE_SUBMIT_CRITERIA = { class: 'search icon tooltip' }
+    HOME_PAGE_SUBMIT_CRITERIA = { class: %w[search icon tooltip] }
     RESULTS_PAGE_SUBMIT_CRITERIA = { id: 'sb_form_go' }
 
     def send_search(options = {})
@@ -30,7 +30,6 @@ module Binger
     private
 
     def to_sign_in
-      patiently_select(:element, class: %w[closeIcon rms_img]).click
       patiently_select(:element, id: 'mHamburger').click
       patiently_select(:element, id: 'hb_s').click
     end
