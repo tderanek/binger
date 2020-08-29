@@ -8,12 +8,12 @@ module Binger
       @browser = nil
     end
 
-    def browser
+    def _browser
       @browser ||= new_browser
     end
 
     def close
-      browser.close
+      _browser.close
     end
 
     def login(username, password)
@@ -23,11 +23,11 @@ module Binger
     end
 
     def patiently_select(element_type, search, seconds = 10)
-      element = browser.send(element_type, search).wait_until(interval: 0.5, &:present?)
+      element = _browser.send(element_type, search).wait_until(interval: 0.5, &:present?)
     end
 
     def to_main_page
-      browser.goto('https://www.bing.com')
+      _browser.goto('https://www.bing.com')
     end
 
     private

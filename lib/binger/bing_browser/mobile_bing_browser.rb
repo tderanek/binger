@@ -6,7 +6,7 @@ module Binger
     RESULTS_PAGE_SUBMIT_CRITERIA = { id: 'sb_form_go' }
 
     def send_search(options = {})
-      if browser.text_field(id: 'sb_form_q').present?
+      if _browser.text_field(id: 'sb_form_q').present?
         patiently_select(:text_field, id: 'sb_form_q').yield_self do |search_bar|
           search_bar.set(options[:custom_search] || randomized_query)
         end
@@ -17,9 +17,9 @@ module Binger
       end
 
       sleep(options[:pause_before]) if options[:pause_before]
-      if browser.element(HOME_PAGE_SUBMIT_CRITERIA).present?
+      if _browser.element(HOME_PAGE_SUBMIT_CRITERIA).present?
         patiently_select(:element, HOME_PAGE_SUBMIT_CRITERIA).click
-      elsif browser.element(RESULTS_PAGE_SUBMIT_CRITERIA).present?
+      elsif _browser.element(RESULTS_PAGE_SUBMIT_CRITERIA).present?
         patiently_select(:element, RESULTS_PAGE_SUBMIT_CRITERIA).click
       else
         abort 'Submit button not found'

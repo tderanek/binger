@@ -8,7 +8,7 @@ module Binger
       end
 
       sleep(options[:pause_before]) if options[:pause_before]
-      if browser.form(id: 'sb_form').present?
+      if _browser.form(id: 'sb_form').present?
         patiently_select(:form, id: 'sb_form').submit
       else
         patiently_select(:element, id: 'sb_form_go').click
@@ -20,6 +20,21 @@ module Binger
 
     def new_browser
       Watir::Browser.new(:chrome)
+    end
+
+    def submit_credentials(username, password)
+      STDOUT.puts 'Here'
+      # Enter and confirm email address
+      patiently_select(:text_field, type: 'email').set(username)
+      patiently_select(:element, id: 'idSIButton9', type: 'submit').click
+      # # Enter and confirm password
+      patiently_select(:text_field, type: 'password').set(password)
+      patiently_select(:element, id: 'idSIButton9', type: 'submit').click
+      # Check for "Stay signed in?" Dialogue Box
+      sleep(1)
+      if _browser.input(type: 'submit', value: 'Yes').present?
+        patiently_select(:element, id: 'idSIButton9', type: 'submit').click
+      end
     end
 
     def to_sign_in
