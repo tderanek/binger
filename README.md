@@ -1,6 +1,6 @@
-# binger (VERY MUCH A WORK IN PROGRESS)
+# binger
 
-Pronounced "bing-er". Will automate daily searches for Microsoft Rewards
+Pronounced "bing-er". Automates daily searches for Microsoft Rewards
 
 
 ## Installation
@@ -20,13 +20,14 @@ sure which directories are in your path. Open up an IRB session and run the foll
 
 ```
 # The nil at the end isn't necessary. It's just to avoid the entire array being printed again
-`echo $PATH`.split(':').each { |dir| puts dir } ; nil
+pp(`echo $PATH`.split(':')) ; nil
 ```
 
 Unzip the Chrome Web Driver when you download it and place its executable (it should be called `chromedriver`) in one of those directories
 
 Oh, you'll also need ruby installed. I'm developing using version 2.5.1, so that's the version I recommend using. If you haven't yet 
 installed ruby on your system, I recommend using [RVM](https://rvm.io/rvm/install) to do so.
+
 
 ## Usage
 
@@ -41,6 +42,7 @@ on it, okay?
 
 TODO: Write better usage section
 
+
 ## Development
 
 I am yet to write a single test for this project and half of it is not functional, so I don't recommend jumping on board with this
@@ -48,14 +50,17 @@ project just yet. If its mildly useful for your daily desktop bing searches thou
 
 TODO: Write better developer instructions
 
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/tderanek/binger. This project is intended to be a safe,
 welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
 
 ## Code of Conduct
 
