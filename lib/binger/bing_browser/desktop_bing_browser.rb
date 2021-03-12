@@ -2,6 +2,12 @@
 
 module Binger
   class DesktopBingBrowser < BingBrowser
+    SUPPORTED_BROWSER_TYPES = %i[edge chrome]
+
+    def initialize(browser_type = 'chrome')
+      @browser_type = sanitize_browser_type(browser_type)
+    end
+
     def send_search(options = {})
       patiently_select(:text_field, name: 'q').yield_self do |search_bar|
         search_bar.set(options[:custom_search] || randomized_query)
@@ -19,11 +25,20 @@ module Binger
     private
 
     def new_browser
-      Watir::Browser.new(:chrome)
+      Watir::Browser.new(@browser_type)
+    end
+
+    def sanitize_browser_type(browser_type)
+      provided_browser = browser_type.downcase.to_sym
+      
+      unless SUPPORTED_BROWSER_TYPES.include?(provided_browser)
+        raise "Unsupported browser type provided (#{browser_type}). Supported browser types: #{supported_browser_types_string}"
+      end
+
+      provided_browser
     end
 
     def submit_credentials(username, password)
-      STDOUT.puts 'Here'
       # Enter and confirm email address
       patiently_select(:text_field, type: 'email').set(username)
       patiently_select(:element, id: 'idSIButton9', type: 'submit').click
@@ -35,6 +50,10 @@ module Binger
       if _browser.input(type: 'submit', value: 'Yes').present?
         patiently_select(:element, id: 'idSIButton9', type: 'submit').click
       end
+    end
+
+    def supported_browser_types_string
+      SUPPORTED_BROWSER_TYPES.join(', ')
     end
 
     def to_sign_in

@@ -34,12 +34,19 @@ module Binger
                  desc: 'Overrides randomly generated search with a fixed string',
                  default: nil
 
-    desc 'desktop', 'Sends 30 desktop searches in quick succession'
+
+    method_option :browser_type,
+                  type: :string,
+                  aliases: :t,
+                  enum: %w[edge chrome],
+                  desc: 'Determines the type of browser to use. Options: edge, chrome',
+                  default: :chrome
+    desc 'desktop', 'Simulates desktop browser searches'
     def desktop
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
 
-      bing_browser = DesktopBingBrowser.new
+      bing_browser = DesktopBingBrowser.new(options[:browser_type])
       bing_browser.login(username, password)
       options[:num_searches].times do
         bing_browser.send_search(
@@ -52,7 +59,7 @@ module Binger
       bing_browser.close
     end
 
-    desc 'mobile', 'Technically working...'
+    desc 'mobile', 'Simulates mobile browser searches'
     def mobile
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
@@ -70,7 +77,7 @@ module Binger
       bing_browser.close
     end
 
-    desc 'turbo_mode', 'Raw, untapped power... use at your own risk... literally. Have not done any polishing'
+    desc 'turbo_mode', 'Runs both desktop and mobile simulations'
     def turbo_mode
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
