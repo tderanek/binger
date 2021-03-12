@@ -4,7 +4,7 @@ module Binger
   class DesktopBingBrowser < BingBrowser
     SUPPORTED_BROWSER_TYPES = %i[edge chrome]
 
-    def initialize(browser_type = 'chrome')
+    def initialize(browser_type = 'edge')
       @browser_type = sanitize_browser_type(browser_type)
     end
 
@@ -30,7 +30,7 @@ module Binger
 
     def sanitize_browser_type(browser_type)
       provided_browser = browser_type.downcase.to_sym
-      
+
       unless SUPPORTED_BROWSER_TYPES.include?(provided_browser)
         raise "Unsupported browser type provided (#{browser_type}). Supported browser types: #{supported_browser_types_string}"
       end
