@@ -30,6 +30,7 @@ module Binger
     private
 
     def to_sign_in
+      patiently_select(:element, class: 'closeIcon rms_img').click
       patiently_select(:element, id: 'mHamburger').click
       patiently_select(:element, id: 'hb_s').click
     end
