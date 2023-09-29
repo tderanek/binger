@@ -16,14 +16,14 @@ module Binger
       _browser.close
     end
 
-    def login(username, password)
+    def login(username, password, skip_close_warning = false)
       to_main_page
-      to_sign_in
+      to_sign_in(skip_close_warning)
       submit_credentials(username, password)
     end
 
     def patiently_select(element_type, search, seconds = 10)
-      element = _browser.send(element_type, search).wait_until(interval: 0.5, &:present?)
+      element = _browser.send(element_type, search).wait_until(interval: 0.25, &:present?)
     end
 
     def to_main_page

@@ -58,13 +58,19 @@ module Binger
       bing_browser.close
     end
 
+    method_option :skip_close_warning,
+                 type: :boolean,
+                 aliases: :w,
+                 desc: 'Skips the attempt to close the warning on a mobile search',
+                 default: false
     desc 'mobile', 'Simulates mobile browser searches'
     def mobile
       username = options[:email] || Helper.prompt_for_username
       password = options[:password] || Helper.prompt_for_password
+      skip_close_warning = options[:skip_close_warning]
 
       bing_browser = MobileBingBrowser.new
-      bing_browser.login(username, password)
+      bing_browser.login(username, password, skip_close_warning)
       options[:num_searches].times do
         bing_browser.send_search(
           pause_before: options[:pause_before],

@@ -9,9 +9,15 @@ module Binger
     end
 
     def send_search(options = {})
-      patiently_select(:text_field, name: 'q').yield_self do |search_bar|
+      # if _browser.textarea(name: 'q').present?
+      patiently_select(:textarea, name: 'q').yield_self do |search_bar|
         search_bar.set(options[:custom_search] || randomized_query)
       end
+      # else
+        # patiently_select(:input, name: 'q').yield_self do |search_bar|
+          # search_bar.set(options[:custom_search] || randomized_query)
+        # end
+      # end
 
       sleep(options[:pause_before]) if options[:pause_before]
       if _browser.form(id: 'sb_form').present?
@@ -56,7 +62,7 @@ module Binger
       SUPPORTED_BROWSER_TYPES.join(', ')
     end
 
-    def to_sign_in
+    def to_sign_in(_skip_close_warning)
       sleep(2)
       patiently_select(:element, id: 'id_l').click
     end

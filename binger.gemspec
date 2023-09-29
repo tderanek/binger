@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   # spec.add_dependency 'selenium-webdriver', '~> 4.0.0.beta1'
   spec.add_dependency 'thor', '~> 0.20'
-  spec.add_dependency 'watir', '~> 7.0.0.beta5'
+  spec.add_dependency 'watir', '~> 7.0'
   spec.add_dependency 'webdriver-user-agent', '~> 7.6'
   spec.add_dependency 'psych', '~> 3.0'
 

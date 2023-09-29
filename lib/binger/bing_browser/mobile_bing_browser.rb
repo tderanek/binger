@@ -2,7 +2,7 @@
 
 module Binger
   class MobileBingBrowser < BingBrowser
-    HOME_PAGE_SUBMIT_CRITERIA = { class: %w[search icon tooltip] }
+    HOME_PAGE_SUBMIT_CRITERIA = { id: 'sb_form' }
     RESULTS_PAGE_SUBMIT_CRITERIA = { id: 'sb_form_go' }
 
     def send_search(options = {})
@@ -17,20 +17,22 @@ module Binger
       end
 
       sleep(options[:pause_before]) if options[:pause_before]
-      if _browser.element(HOME_PAGE_SUBMIT_CRITERIA).present?
-        patiently_select(:element, HOME_PAGE_SUBMIT_CRITERIA).click
+
+      if _browser.textarea(id: 'sb_form_q').present?
+        patiently_select(:form, HOME_PAGE_SUBMIT_CRITERIA).submit
       elsif _browser.element(RESULTS_PAGE_SUBMIT_CRITERIA).present?
         patiently_select(:element, RESULTS_PAGE_SUBMIT_CRITERIA).click
       else
         abort 'Submit button not found'
       end
+
       sleep(options[:pause_after]) if options[:pause_after]
     end
 
     private
 
-    def to_sign_in
-      patiently_select(:element, class: 'closeIcon rms_img').click
+    def to_sign_in(skip_close_warning = false)
+      patiently_select(:element, { class: 'closeIcon rms_img' }).click unless skip_close_warning
       patiently_select(:element, id: 'mHamburger').click
       patiently_select(:element, id: 'hb_s').click
     end
