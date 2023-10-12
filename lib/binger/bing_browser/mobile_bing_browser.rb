@@ -2,7 +2,7 @@
 
 module Binger
   class MobileBingBrowser < BingBrowser
-    HOME_PAGE_SUBMIT_CRITERIA = { id: 'sb_form' }
+    HOME_PAGE_SUBMIT_CRITERIA = { id: 'search_icon' }
     RESULTS_PAGE_SUBMIT_CRITERIA = { id: 'sb_form_go' }
 
     def send_search(options = {})
@@ -18,8 +18,8 @@ module Binger
 
       sleep(options[:pause_before]) if options[:pause_before]
 
-      if _browser.textarea(id: 'sb_form_q').present?
-        patiently_select(:form, HOME_PAGE_SUBMIT_CRITERIA).submit
+      if _browser.element(HOME_PAGE_SUBMIT_CRITERIA).present?
+        patiently_select(:element, HOME_PAGE_SUBMIT_CRITERIA).click
       elsif _browser.element(RESULTS_PAGE_SUBMIT_CRITERIA).present?
         patiently_select(:element, RESULTS_PAGE_SUBMIT_CRITERIA).click
       else
